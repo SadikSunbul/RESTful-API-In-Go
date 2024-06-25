@@ -29,8 +29,36 @@ func allArticals(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: All Articles Endpoint") // Konsola endpoint bilgisi yazdırılır
 	json.NewEncoder(w).Encode(articles)                // Makaleleri JSON formatında HTTP yanıtına kodlar
 
-	w.Write([]byte("Sadık Sünbül")) //boylede verı godnerılır ama byte seklınde gittigi içi
+	/*
+		w.Write([]byte("Sadık Sünbül \n")) //boylede verı godnerılır ama json seklınde gitmediği için kullanmayız
+
+		deneme := Deneme{ //istersen altakı gııbde godner bırlrız verıleris
+			Name:  "John",
+			Name2: "Doe",
+		}
+		jsonData, err := json.Marshal(deneme)
+		if err != nil {
+			fmt.Println("JSON encode hatası:", err)
+			return
+		}
+
+		w.Write(jsonData)
+
+		// Buda olur
+		json.NewEncoder(w).Encode(struct {
+			Name  string `json:"ali"` //bu degıskenın karsılıgı alı olyur jsonda
+			Name2 string `json:"salih"`
+		}{
+			Name:  "Ahmet", //degiri burada verilir
+			Name2: "Mehmet",
+		}) */
+
 }
+
+//type Deneme struct {
+//	Name  string `json:"ali"`
+//	Name2 string `json:"salih"`
+//}
 
 // Ana sayfa endpointi için handler fonksiyonu
 func homePage(w http.ResponseWriter, r *http.Request) {
