@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
@@ -66,14 +67,25 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Ana sayfa endpointi hit edildi")
 }
 
+func testPostArticals(w http.ResponseWriter, r *http.Request) {
+	// Tarayıcıya basit bir metin yanıtı gönderilir
+	fmt.Fprintf(w, "testPostArticals endpointi hit edildi")
+}
+
 // HTTP isteklerini yönetmek için handleRequest fonksiyonu
 func handleRequest() {
+
+	myRouter := mux.NewRouter().StrictSlash(true)
 	// "/" ve "/articles" endpointlerini ilgili handler fonksiyonlarına bağlar
-	http.HandleFunc("/", homePage)
-	http.HandleFunc("/articles", allArticals)
+	//http.HandleFunc("/", homePage)
+	//http.HandleFunc("/articles", allArticals)
+
+	myRouter.HandleFunc("/", homePage).Methods("GET")
+	myRouter.HandleFunc("/articles", allArticals).Methods("GET")
+	myRouter.HandleFunc("/articles", testPostArticals).Methods("POST")
 
 	// HTTP sunucusunu 8081 portunda başlatır ve log.Fatal ile hata durumunda programı durdurur
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	log.Fatal(http.ListenAndServe(":8081", myRouter)) //2.parametre nildi onceden
 }
 
 // Ana fonksiyon, HTTP istekleri yönetimini başlatır
